@@ -1,0 +1,25 @@
+<template>
+    <div class="slds-var-m-top_medium slds-m-bottom_x-large">
+        <h2 class="slds-text-heading_medium slds-var-m-bottom_medium">
+            Looking For Great Food Near You..
+        </h2>
+        <lightning-input type="search" onkeyup={handleKeyChange} class="slds-var-m-around_small" label="Search For Food">
+        </lightning-input>
+         <!-- Brand variant: Identifies the primary action in a group of buttons -->
+         <lightning-button variant="brand" label="Search" title="Primary action" 
+         onclick={handleClick} class="slds-var-m-left_x-small"></lightning-button>
+    </div>
+    <template if:true={ishow}>
+        <template for:each={itemList.data} for:item="item">
+         <div key={item.Id} class="slds-var-m-around_large">
+                <p>  {item.Name} </p> 
+                <lightning-card title={item.Name}>
+                    <img src={swiggyImage} alt="Pizza Image" height="300px" width="300px" >
+                    <div>  {item.Food__c} </div>
+                    <h2> <p> @ Rs.{item.Rate__c} </p> </h2>
+                     <!-- <p>  {item.Description__c} </p>  -->
+                </lightning-card>
+         </div>
+        </template>
+    </template>
+</template>

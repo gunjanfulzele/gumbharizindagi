@@ -1,0 +1,96 @@
+<template>
+    <lightning-card title="Custom Account Search">
+        <lightning-layout multiple-rows="true" vertical-align="end">
+            <!-- pagination -->
+                    <lightning-layout-item size="6" padding="around-small">
+                        <div class="slds-box slds-theme_default">
+                            <lightning-card>
+                                <lightning-layout-item size="6" padding="around-small">
+                                    <!--Input text to Search Account-->
+                                   <lightning-input type="text"
+                                       value={searchKey} 
+                                       onchange={handelSearchKey}>
+                                   </lightning-input>
+                               </lightning-layout-item >
+                               <lightning-layout-item size="2" padding="around-small">
+                                   <!--Search Button-->
+                                   <lightning-button label="Search" variant="brand" onclick={SearchAccountHandler}>
+                                   </lightning-button>
+                               </lightning-layout-item>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead>
+                                        <tr class="slds-line-height_reset slds-text-title_caps">
+                                            <th class="slds-is-resizable" scope="col">
+                                                <div class="slds-truncate" title="Name">
+                                                    Name
+                                                </div>
+                                            </th>
+                                            <th class="slds-is-resizable" scope="col">
+                                                <div class="slds-truncate" title="View Details">
+                                                    View Details
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template if:true={visibleAccounts}>
+                                            <template for:each={visibleAccounts} for:item="account">
+                                                <tr key={account.Id}>
+                                                    <th scope="row" data-label="Name">
+                                                        <div class="slds-truncate" title={account.Name}>{account.Name}</div>
+                                                    </th>
+                                                    <th scope="row" data-label="View Details">
+                                                        <lightning-button slot="actions" label="View" onclick={ViewDetails}
+                                                            disabled={isButtonDisabled}
+                                                    ></lightning-button>
+                                                    </th>
+                                                </tr>
+                                            </template>
+                                        </template>
+                                    </tbody>
+                                </table>
+                        </lightning-card>
+                        <div slot="footer" class="slds-var-m-horizontal_medium">
+                            <c-pagination records={accounts} record-size="4" onupdate={updateAccountHandler}></c-pagination>
+                        </div>
+                    </div>
+            </lightning-layout-item>
+        </lightning-layout>
+                <!--List Of Account Using data Tabel-->
+                
+                <!-- <lightning-datatable key-field="id" data={accounts} columns ={cols}> 
+                </lightning-datatable> -->
+            
+            <!-- pagination -->
+                    <lightning-layout-item size="6" padding="around-small">
+                        <div>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <template if:true={visibleAccounts} >
+                                        <template for:each={visibleAccounts} for:item="account">
+                                            <tr key={account.Id}>
+                                                <th scope="row" data-label="Name">
+                                                    <div class="slds-truncate" title={account.Name}>{account.Name}</div>
+                                                </th>
+                                                <th scope="row" data-label="View Details">
+
+                                                    <lightning-button slot="actions" label="View" onclick={ViewDetails}
+
+                                                        disabled={isButtonDisabled}
+
+                                                ></lightning-button>
+
+                                                </th>
+                                            </tr>   
+                                        </template>
+                                    </template>
+                                </thead>
+                            </table>
+                        <div slot="footer" class="slds-var-m-horizontal_medium">
+                            <c-pagination records={accounts} record-size="4" onupdate={updateAccountHandler}></c-pagination>    
+                    </div>
+                    </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

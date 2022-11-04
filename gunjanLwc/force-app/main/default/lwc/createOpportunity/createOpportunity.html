@@ -1,0 +1,151 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card  title="Create Contact">
+        <div style="height: 300px;">
+            <lightning-datatable
+                    key-field="id"
+                    data={totalContact}
+                    columns={columns}
+                    hide-checkbox-column="true"
+                    onrowaction={handlerowaction}
+                    show-row-number-column="true">
+            </lightning-datatable>
+        </div>
+        <footer class="slds-modal__footer">
+            <lightning-button label="Add Contact" variant="success" onclick={showModalBox} slot="actions"></lightning-button> 
+        </footer>  
+    </lightning-card>
+    
+    <!-- modal start -->      
+    <template if:true={isShowModal}>
+
+        <!--
+            I Used SLDS for this code
+            Here is link https://www.lightningdesignsystem.com/components/modals/
+        --> 
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+    <!-- modal header start -->
+    <header class="slds-modal__header">
+        <!-- sldsValidatorIgnoreNextLine -->
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+            <lightning-icon icon-name="utility:close"
+            alternative-text="close"
+            variant="inverse"
+            size="small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Contact</h2>
+    </header>
+
+    <!-- modal body start -->
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <div>
+            <lightning-input label="FirstName" onchange={handlefirstName}></lightning-input>
+            <lightning-input label="LastName" onchange={handlelastName}></lightning-input>
+            <lightning-input label="Email" onchange={handleEmail}></lightning-input>
+        </div>
+    </div>
+
+    <!-- modal footer start-->
+    <footer class="slds-modal__footer">
+        <lightning-button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</lightning-button>
+        <lightning-button class="slds-button slds-button_neutral" variant="brand" onclick={onSaveContact}>Save</lightning-button>
+    </footer>
+
+    </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- modal end -->
+
+
+   <!-- modal start -->      
+   <template if:true={isEditModal}>
+
+            <!--
+                I Used SLDS for this code
+                Here is link https://www.lightningdesignsystem.com/components/modals/
+            --> 
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+       <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+             <!-- sldsValidatorIgnoreNextLine -->
+             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideEditModal}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button>
+             <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Edit Contact</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+            <div>
+                <lightning-input label="FirstName" onchange={h}></lightning-input>
+                <lightning-input label="LastName" onchange={ha}></lightning-input>
+                <lightning-input label="Email" onchange={han}></lightning-input>
+            </div>
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+             <button class="slds-button slds-button_neutral" onclick={hideEditModal}>Cancel</button>
+             <button class="slds-button slds-button_neutral" onclick={ds}>Save</button>
+          </footer>
+       
+       </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+ </template>
+ <!-- modal end -->
+ <template if:true={isViewModal}>
+
+    <!--
+        I Used SLDS for this code
+        Here is link https://www.lightningdesignsystem.com/components/modals/
+    --> 
+
+<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+<div class="slds-modal__container">
+<!-- modal header start -->
+  <header class="slds-modal__header">
+     <!-- sldsValidatorIgnoreNextLine -->
+     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideViewBox}>
+        <lightning-icon icon-name="utility:close"
+           alternative-text="close"
+           variant="inverse"
+           size="small" ></lightning-icon>
+        <span class="slds-assistive-text">Close</span>
+     </button>
+     <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">View Contact</h2>
+  </header>
+
+  <!-- modal body start -->
+  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+    <template if:true={wireContacts}>
+        <template for:each={wireContacts.data} for:item="con">
+            <div key={con.id}>
+                <label class="slds-text-body_small"><b>Contact Name:</b>{con.FirstName}</label><br>
+                <label class="slds-text-body_small"><b>Contact Name:</b>{con.LastName}</label><br>
+                <label class="slds-text-body_small"><b>Email:</b>{con.Email}</label>
+            </div>
+        </template>
+    </template>
+  </div>
+
+  <!-- modal footer start-->
+  <footer class="slds-modal__footer">
+     <button class="slds-button slds-button_neutral" onclick={hideViewBox}>Cancel</button>
+  </footer>
+
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+</template>
